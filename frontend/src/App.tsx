@@ -8,7 +8,6 @@ import InputAgePage from './pages/InputAge';
 import InputGenderPage from './pages/InputGender';
 import CheckInfoPage from './pages/CheckInfo';
 import InputMedicinePage from './pages/InputMedicine';
-import ChatbotPage from './pages/Chatbot';
 
 const App: React.FC = () => {
   const currentPage = usePageStore((state) => state.currentPage);
@@ -24,7 +23,6 @@ const App: React.FC = () => {
         <Route path="/info/input/gender" element={<InputGenderPage/>} />
         <Route path="/info/input/medicine" element={<InputMedicinePage/>} />
         <Route path="/info/check" element={<CheckInfoPage/>} />
-        <Route path="/chatbot" element={<ChatbotPage/>} />
       </Routes>
     </Router>
   );
