@@ -19,21 +19,19 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Ensure package-lock.json exists
-        run: |
-          if [ ! -f package-lock.json ]; then
-            echo "package-lock.json not found. Running npm install to generate it."
-            npm install --package-lock-only
-          fi
-        working-directory: ./frontend  # 프론트엔드 디렉토리가 맞는지 확인!
+      - name: Debug package-lock.json 위치 확인
+        run: find . -name "package-lock.json"
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./frontend
+        working-directory: ./frontend  # package.json이 있는 폴더로 변경!
 
       - name: Build project
         run: npm run build
         working-directory: ./frontend
+
+      - name: Debug build output
+        run: ls -lah ./frontend/dist || echo "No build output found!"
 
       - name: Authenticate with GCP
         uses: google-github-actions/auth@v2
@@ -41,4 +39,10 @@ jobs:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Upload to GCS
-        run: gsutil -m rsync -r ./frontend/dist gs://${{ secrets.GCS_BUCKET_NAME }}
+        run: |
+          if [ -d "./frontend/dist" ]; then
+            gsutil -m rsync -r ./frontend/dist gs://${{ secrets.GCS_BUCKET_NAME }}
+          else
+            echo "Error: Build output not found!"
+            exit 1
+          fi
