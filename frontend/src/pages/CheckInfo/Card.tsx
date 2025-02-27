@@ -10,7 +10,7 @@ const thStyle = 'px-5 py-3 text-2xl/8 align-top bg-myBaseBrown';
 const tdStyle = 'px-5 py-3 text-2xl/8 w-[30px]';
 
 type CardProps = {
-  path: string;
+  url: string;
 }
 
 interface ApiResponse {
@@ -24,13 +24,13 @@ interface ApiResponse {
   }>
 }
 
-export default function Card({ path }: CardProps) {
+export default function Card({ url }: CardProps) {
   const [data, setData] = useState<ApiResponse | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${path}`)
+        const response = await axios.get(`${url}`)
         setData(response.data)
       } catch (error) {
         console.error('Axios error:', error)

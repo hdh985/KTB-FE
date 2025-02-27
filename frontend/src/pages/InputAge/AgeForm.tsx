@@ -3,14 +3,18 @@ import { APIButton } from '../../components/ui/Button';
 import { useEffect, useState } from 'react';
 import axios from 'node_modules/axios';
 
-export default function AgeForm() {
+type AgeFormProps = {
+  url: string
+}
+
+export default function AgeForm({url}: AgeFormProps) {
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('api/user', {
+        const response = await axios.get(`${url}`, {
           withCredentials: true,
         });
 

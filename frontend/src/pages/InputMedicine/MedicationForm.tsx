@@ -5,7 +5,11 @@ import axios from 'axios';
 import MedicationCard from './MedicationCard';
 import { Medication } from './MedicationType';
 
-export default function MedicationForm() {
+type MedicationFormProps = {
+  url: string
+}
+
+export default function MedicationForm({url}: MedicationFormProps) {
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState<Medication[]>([{ type: '', day: '', frequency: '' }]);
   const [medicationTags, setMedicationTags] = useState<string[]>([])
@@ -13,7 +17,7 @@ export default function MedicationForm() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('api/user', {
+        const response = await axios.get(`${url}`, {
           withCredentials: true,
         })
         if (response.data && response.data.medications) {
@@ -93,7 +97,7 @@ export default function MedicationForm() {
           </div>
         )}
         <APIButton
-          url={'api/medications'}
+          url={`${url}`}
           path={'info/check'}
           name={'다음 단계로 이동'}
           data={apiData}

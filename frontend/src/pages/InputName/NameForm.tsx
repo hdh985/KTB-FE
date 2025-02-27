@@ -3,14 +3,18 @@ import { APIButton } from '../../components/ui/Button';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default function NameForm() {
+type NameFormProps = {
+  url: string
+}
+
+export default function NameForm({url}: NameFormProps) {
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('api/user', {
+        const response = await axios.get(`${url}`, {
           withCredentials: true,
         });
 
@@ -53,7 +57,7 @@ export default function NameForm() {
           required
         />
         <APIButton
-          url="api/name"
+          url={`${url}`}
           path="info/input/age"
           name="다음"
           data={{ name: value }}
