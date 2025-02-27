@@ -1,9 +1,9 @@
-import MedicineForm from "./MedicineForm";
+import MedicationForm from "./MedicationForm";
 
 export default function InputMedicinePage() {
     return (
         <section className="wrap">
-            <MedicineForm/>
+            <MedicationForm/>
         </section>
     )
 }

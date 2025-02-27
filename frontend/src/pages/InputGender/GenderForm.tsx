@@ -11,13 +11,13 @@ export default function GenderForm() {
             <Text5xl>성별을 선택해 주세요.</Text5xl>
             <form 
             onSubmit={onSubmit}
-            className="flex w-80 gap-5">
+            className="flex w-96 gap-5">
                 <div className="flex justify-center w-full">
                     <APIButton
                     url={"api/gender"}
                     path={"info/input/medicine"}
                     name="남자"
-                    className="w-full"
+                    className="w-full h-12 text-2xl"
                     data={{gender: "m"}}
                     method={"PATCH"}
                     />
@@ -27,7 +27,7 @@ export default function GenderForm() {
                     url={"api/gender"}
                     path={"info/input/medicine"}
                     name="여자"
-                    className="w-full"
+                    className="w-full h-12 text-2xl"
                     data={{gender: "f"}}
                     method={"PATCH"}
                     />

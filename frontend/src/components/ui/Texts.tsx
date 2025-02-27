@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, HTMLAttributes, PropsWithChildren } from "node_modules/@types/react"
+import { DetailedHTMLProps, HTMLAttributes } from "react"
 
 type ReactTextProps = DetailedHTMLProps<
     HTMLAttributes<HTMLParagraphElement>,

@@ -8,7 +8,9 @@ export default {
       colors: {
         myBaseBrown: '#F4F3F0',
         myLightGreen: '#98C24E',
-        myHoverLightGreen: '#B4D37E'
+        myHoverLightGreen: '#B4D37E',
+        myHoverWhite: '#E5F0DD',
+        myDarkGray: '#444444'
       }
     },
   },

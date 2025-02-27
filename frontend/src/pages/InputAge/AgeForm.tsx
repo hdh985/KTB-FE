@@ -43,10 +43,10 @@ export default function AgeForm() {
   return (
     <div className="center flex-col gap-10">
       <Text5xl>나이를 입력해 주세요.</Text5xl>
-      <form onSubmit={onSubmit} className="flex flex-col w-80 gap-3">
+      <form onSubmit={onSubmit} className="flex flex-col w-96 gap-3">
         <input
-          placeholder="50"
-          className="text-center w-full h-12 bg-white border-2 focus:border-myLightGreen focus:outline-none"
+          placeholder="숫자만 입력해 주세요."
+          className="text-2xl text-center w-full h-16 bg-white border-2 focus:border-myLightGreen focus:outline-none"
           type="number"
           min="1"
           max="150"

@@ -5,7 +5,7 @@ import { RedirectButton } from "@/components/ui/Button";
 export default function InfoPost() {
     return (
         <div className="container center flex-col gap-5">
-            <Text5xl>입력한 정보를<br/>최종 확인해 주세요.</Text5xl>
+            <Text5xl className="leading-[1.2]">입력한 정보를<br/>최종 확인해 주세요.</Text5xl>
             <div className="center flex-col gap-10">
                 <Card path={"/api/medications"}/>
                 <div className="center gap-3">

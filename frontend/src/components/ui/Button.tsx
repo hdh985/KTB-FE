@@ -1,5 +1,5 @@
 import { usePostStore } from '@/stores/postStore';
-import { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'node_modules/@types/react';
+import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 type ReactButtonProps = DetailedHTMLProps<
