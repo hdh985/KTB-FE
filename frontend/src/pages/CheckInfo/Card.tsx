@@ -7,7 +7,7 @@ const CardText = 'text-left'
 const CardClassName = `${CardLayout} ${CardStyle} ${CardText}`
 
 const thStyle = 'px-5 py-3 text-2xl/8 align-top bg-myBaseBrown'
-const tdStyle = 'px-5 py-3 text-2xl/8 w-[30px]'
+const tdStyle = 'px-5 py-3 text-2xl/8'
 
 type CardProps = {
   url: string
