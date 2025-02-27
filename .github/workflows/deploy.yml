@@ -44,6 +44,9 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
+      - name: Configure Docker for Google Cloud
+        run: gcloud auth configure-docker --quiet
+
       - name: Push Docker Image
         run: |
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-app:v1
