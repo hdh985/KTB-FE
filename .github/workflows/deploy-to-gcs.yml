@@ -19,9 +19,17 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
+      - name: Ensure package-lock.json exists
+        run: |
+          if [ ! -f package-lock.json ]; then
+            echo "package-lock.json not found. Running npm install to generate it."
+            npm install --package-lock-only
+          fi
+        working-directory: ./frontend  # 프론트엔드 디렉토리가 맞는지 확인!
+
       - name: Install dependencies
         run: npm install
-        working-directory: ./frontend # 여기서 올바른 작업 디렉토리를 설정하세요.
+        working-directory: ./frontend
 
       - name: Build project
         run: npm run build
