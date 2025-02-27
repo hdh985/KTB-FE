@@ -14,6 +14,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Unzip project files
+        run: unzip -o KTB-FE-main.zip -d frontend
+
+      - name: List project structure
+        run: ls -R
+        working-directory: ./frontend
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -21,11 +28,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./KTB-FE-main  # zip 파일 내부에 위치한 프로젝트 폴더
+        working-directory: ./frontend/KTB-FE-main
 
       - name: Build the project
         run: npm run build
-        working-directory: ./KTB-FE-main
+        working-directory: ./frontend/KTB-FE-main
 
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v2
@@ -39,7 +46,7 @@ jobs:
 
       - name: Deploy to Google Cloud Storage
         run: |
-          gsutil -m rsync -r ./KTB-FE-main/dist gs://${{ secrets.GCS_BUCKET_NAME }}
+          gsutil -m rsync -r ./frontend/KTB-FE-main/dist gs://${{ secrets.GCS_BUCKET_NAME }}
 
       - name: (Optional) Invalidate Cloud CDN Cache
         run: |
