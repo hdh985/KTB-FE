@@ -72,7 +72,7 @@ export default function AgeForm({ url }: AgeFormProps) {
           required
         />
         <APIButton
-          url={''}
+          url={`${url}`}
           path="info/input/gender"
           name="다음"
           data={{ age: value }}

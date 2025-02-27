@@ -67,10 +67,10 @@ export const APIButton = ({
   const handleButtonClick = async () => {
     switch (method) {
       case 'POST':
-        await postData(`/${url}`, data)
+        await postData(`${url}`, data)
         break
       case 'PATCH':
-        await patchData(`/${url}`, data)
+        await patchData(`${url}`, data)
         break
     }
     navigate(`/${path}`)
