@@ -37,7 +37,7 @@ jobs:
       - name: Build Docker Image
         working-directory: ./frontend
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-app:v1 .
+          docker build -t asia-northeast3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ktb-fe/my-app:v1 .
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
@@ -49,13 +49,13 @@ jobs:
 
       - name: Push Docker Image
         run: |
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-app:v1
+          docker push asia-northeast3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ktb-fe/my-app:v1
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy my-app \
-            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-app:v1 \
-            --region us-central1 \
+            --image asia-northeast3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ktb-fe/my-app:v1 \
+            --region asia-northeast3 \
             --platform managed \
             --allow-unauthenticated
         env:
