@@ -40,9 +40,9 @@ jobs:
           docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-app:v1 .
 
       - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v0
+        uses: google-github-actions/auth@v1
         with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Push Docker Image
         run: |
