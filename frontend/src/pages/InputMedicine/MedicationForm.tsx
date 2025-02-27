@@ -11,7 +11,8 @@ type MedicationFormProps = {
 
 export default function MedicationForm({ url }: MedicationFormProps) {
   const [loading, setLoading] = useState(true)
-  const [value, setValue] = useState<Medication[]>([{ type: '', day: '', frequency: '' }])
+  const [currentMedication, setCurrentMedication] = useState<Medication>({ type: '', day: '', frequency: '' })
+  const [savedMedications, setSavedMedications] = useState<Medication[]>([])
   const [medicationTags, setMedicationTags] = useState<string[]>([])
 
   useEffect(() => {
@@ -21,7 +22,10 @@ export default function MedicationForm({ url }: MedicationFormProps) {
           withCredentials: true,
         })
         if (response.data && response.data.medications) {
-          setValue(response.data.medications)
+          setSavedMedications(response.data.medications)
+
+          const tags = response.data.medications.map((med: Medication) => med.type)
+          setMedicationTags(tags)
         }
       } catch (error) {
         console.error('사용자 데이터 불러오기 실패:', error)
@@ -30,36 +34,37 @@ export default function MedicationForm({ url }: MedicationFormProps) {
       }
     }
     fetchUserData()
-  }, [])
+  }, [url])
 
-  const handleMedicationChange = (index: number, updatedMedication: Medication) => {
-    const updatedMedications = [...value]
-    updatedMedications[index] = updatedMedication
-    setValue(updatedMedications)
+  const handleMedicationChange = (updatedMedication: Medication) => {
+    setCurrentMedication(updatedMedication)
   }
 
-  const handleAddMedicationTag = (medicationName: string) => {
-    if (medicationName.trim() !== '' && !medicationTags.includes(medicationName)) {
-      setMedicationTags([...medicationTags, medicationName])
+  const handleAddMedicationTag = () => {
+    if (
+      currentMedication.type.trim() !== '' &&
+      currentMedication.day.trim() !== '' &&
+      currentMedication.frequency.trim() !== '' &&
+      !medicationTags.includes(currentMedication.type)
+    ) {
+      setMedicationTags([...medicationTags, currentMedication.type])
+      setSavedMedications([...savedMedications, { ...currentMedication }])
+      setCurrentMedication({ type: '', day: '', frequency: '' })
     }
-    setValue([{ type: '', day: '', frequency: '' }])
   }
 
   const handleRemoveTag = (tagToRemove: string) => {
     setMedicationTags(medicationTags.filter((tag) => tag !== tagToRemove))
+    setSavedMedications(savedMedications.filter((med) => med.type !== tagToRemove))
   }
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
   }
-
-  const validMedications = value.filter(
-    (medication) => medication.type.trim() !== '' && medication.day.trim() !== '' && medication.frequency.trim() !== '',
-  )
-
+  
   const apiData = {
-    medications_json: JSON.stringify(validMedications),
-    total: validMedications.length.toString(),
+    medications: JSON.stringify(savedMedications),
+    total: savedMedications.length.toString(),
   }
 
   return (
@@ -73,14 +78,12 @@ export default function MedicationForm({ url }: MedicationFormProps) {
         onSubmit={onSubmit}
         className="center flex-col w-96 gap-3"
       >
-        {value.map((medication, index) => (
-          <MedicationCard
-            key={index}
-            medication={medication}
-            onChange={(updatedMedication) => handleMedicationChange(index, updatedMedication)}
-            onAdd={() => handleAddMedicationTag(medication.type)}
-          />
-        ))}
+        <MedicationCard
+          medication={currentMedication}
+          onChange={handleMedicationChange}
+          onAdd={handleAddMedicationTag}
+        />
+
         {medicationTags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-2">
             {medicationTags.map((tag, index) => (
@@ -90,6 +93,7 @@ export default function MedicationForm({ url }: MedicationFormProps) {
               >
                 {tag}
                 <button
+                  type="button"
                   onClick={() => handleRemoveTag(tag)}
                   className="ml-2 text-white hover:text-red-200"
                 >
@@ -99,6 +103,7 @@ export default function MedicationForm({ url }: MedicationFormProps) {
             ))}
           </div>
         )}
+
         <APIButton
           url={`${url}`}
           path={'info/check'}
