@@ -7,7 +7,7 @@ export default function Hero() {
   useEffect(() => {
     const initSession = async () => {
       try {
-        const response = await axios.get('/api/init-session', {
+        const response = await axios.get('/api', {
           withCredentials: true
         })
         console.log('세션 초기화 성공:', response.data)
