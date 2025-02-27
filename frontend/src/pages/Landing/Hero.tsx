@@ -1,7 +1,22 @@
 import { RedirectButton } from '@/components/Button'
 import { Title } from '@/components/Texts'
+import { useEffect } from 'react'
+import axios from 'axios'
 
 export default function Hero() {
+  useEffect(() => {
+    const initSession = async () => {
+      try {
+        const response = await axios.get('/api/init-session', {
+          withCredentials: true
+        })
+        console.log('세션 초기화 성공:', response.data)
+      } catch (error) {
+        console.error('세션 초기화 실패:', error)
+      }
+    }
+    initSession()
+  }, [])
   return (
     <div className="container center flex-col gap-10">
       <div className="flex flex-col justify-center items-center gap-3">
