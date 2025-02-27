@@ -57,6 +57,7 @@ jobs:
             --image asia-northeast3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ktb-fe/my-app:v1 \
             --region asia-northeast3 \
             --platform managed \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --port 80
         env:
           CLOUDSDK_CORE_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
