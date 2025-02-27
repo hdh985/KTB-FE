@@ -1,22 +1,22 @@
-import { Text5xl } from '@/components/ui/Texts';
-import { APIButton } from '../../components/ui/Button';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { Text5xl } from '@/components/Texts'
+import { APIButton } from '../../components/Button'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 type NameFormProps = {
   url: string
 }
 
-export default function NameForm({url}: NameFormProps) {
-  const [value, setValue] = useState('');
-  const [loading, setLoading] = useState(true);
+export default function NameForm({ url }: NameFormProps) {
+  const [value, setValue] = useState('')
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(`${url}`, {
           withCredentials: true,
-        });
+        })
 
         if (response.data && response.data.name) {
           setValue(response.data.name)
@@ -24,16 +24,16 @@ export default function NameForm({url}: NameFormProps) {
       } catch (error) {
         console.error('사용자 데이터 불러오기 실패:', error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     }
-    fetchUserData();
+    fetchUserData()
   }, [])
 
   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
     const {
       currentTarget: { value },
-    } = event;
+    } = event
     setValue(value)
   }
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -47,7 +47,10 @@ export default function NameForm({url}: NameFormProps) {
   return (
     <div className="container center flex-col gap-10">
       <Text5xl>이름을 입력해 주세요.</Text5xl>
-      <form onSubmit={onSubmit} className="flex flex-col w-96 gap-3">
+      <form
+        onSubmit={onSubmit}
+        className="flex flex-col w-96 gap-3"
+      >
         <input
           placeholder="홍길동"
           className="text-2xl text-center w-full h-16 bg-white border-2 focus:border-myLightGreen focus:outline-none"
@@ -66,5 +69,5 @@ export default function NameForm({url}: NameFormProps) {
         />
       </form>
     </div>
-  );
+  )
 }

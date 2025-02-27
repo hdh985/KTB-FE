@@ -1,56 +1,63 @@
-import { Text5xl } from '@/components/ui/Texts';
-import { APIButton } from '../../components/ui/Button';
-import { useEffect, useState } from 'react';
-import axios from 'node_modules/axios';
+import { Text5xl } from '@/components/Texts'
+import { APIButton } from '../../components/Button'
+import { useEffect, useState } from 'react'
+import axios from 'node_modules/axios'
+
+const InputLayout = "text-2xl text-center w-full h-16 bg-white border-2 focus:border-myLightGreen focus:outline-none"
+const InputExcept = "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+const InputClassName = `${InputLayout} ${InputExcept}`
 
 type AgeFormProps = {
   url: string
 }
 
-export default function AgeForm({url}: AgeFormProps) {
-  const [value, setValue] = useState('');
-  const [loading, setLoading] = useState(true);
+export default function AgeForm({ url }: AgeFormProps) {
+  const [value, setValue] = useState('')
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(`${url}`, {
           withCredentials: true,
-        });
+        })
 
         if (response.data && response.data.name) {
-          setValue(response.data.name);
+          setValue(response.data.name)
         }
       } catch (error) {
-        console.error('사용자 데이터 불러오기 실패:', error);
+        console.error('사용자 데이터 불러오기 실패:', error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-    fetchUserData();
-  }, []);
+    }
+    fetchUserData()
+  }, [])
 
   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
     const {
       currentTarget: { value },
-    } = event;
-    setValue(value);
-  };
+    } = event
+    setValue(value)
+  }
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  };
+    event.preventDefault()
+  }
 
-  const isValueValid = value.trim().length > 0;
+  const isValueValid = value.trim().length > 0
 
   // if (loading) return <div className="container center">로딩 중...</div>
 
   return (
     <div className="center flex-col gap-10">
       <Text5xl>나이를 입력해 주세요.</Text5xl>
-      <form onSubmit={onSubmit} className="flex flex-col w-96 gap-3">
+      <form
+        onSubmit={onSubmit}
+        className="flex flex-col w-96 gap-3"
+      >
         <input
           placeholder="숫자만 입력해 주세요."
-          className="text-2xl text-center w-full h-16 bg-white border-2 focus:border-myLightGreen focus:outline-none"
+          className={InputClassName}
           type="number"
           min="1"
           max="150"
@@ -69,5 +76,5 @@ export default function AgeForm({url}: AgeFormProps) {
         />
       </form>
     </div>
-  );
+  )
 }

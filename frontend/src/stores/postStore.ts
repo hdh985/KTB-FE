@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import axios from 'axios';
+import { create } from 'zustand'
+import axios from 'axios'
 
 interface PostState {
   isLoading: boolean
@@ -9,28 +9,26 @@ interface PostState {
 
 export const usePostStore = create<PostState>((set) => ({
   isLoading: false,
-  
+
   postData: async (url, data) => {
     set({ isLoading: true })
     try {
       await axios.post(url, data)
     } catch (error) {
-      // Ignore the error and treat as success
-      console.log('Post request failed but treated as success:', error);
+      console.log('Post request failed but treated as success:', error)
     } finally {
       set({ isLoading: false })
     }
   },
-  
+
   patchData: async (url, data) => {
     set({ isLoading: true })
     try {
       await axios.patch(url, data)
     } catch (error) {
-      // Ignore the error and treat as success
-      console.log('Post request failed but treated as success:', error);
+      console.log('Post request failed but treated as success:', error)
     } finally {
       set({ isLoading: false })
     }
-  }
+  },
 }))

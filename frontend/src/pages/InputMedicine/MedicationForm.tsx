@@ -1,17 +1,17 @@
-import { APIButton } from '@/components/ui/Button';
-import { Text5xl } from '@/components/ui/Texts';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import MedicationCard from './MedicationCard';
-import { Medication } from './MedicationType';
+import { APIButton } from '@/components/Button'
+import { Text5xl } from '@/components/Texts'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import MedicationCard from './MedicationCard'
+import { Medication } from './MedicationType'
 
 type MedicationFormProps = {
   url: string
 }
 
-export default function MedicationForm({url}: MedicationFormProps) {
-  const [loading, setLoading] = useState(true);
-  const [value, setValue] = useState<Medication[]>([{ type: '', day: '', frequency: '' }]);
+export default function MedicationForm({ url }: MedicationFormProps) {
+  const [loading, setLoading] = useState(true)
+  const [value, setValue] = useState<Medication[]>([{ type: '', day: '', frequency: '' }])
   const [medicationTags, setMedicationTags] = useState<string[]>([])
 
   useEffect(() => {
@@ -21,20 +21,20 @@ export default function MedicationForm({url}: MedicationFormProps) {
           withCredentials: true,
         })
         if (response.data && response.data.medications) {
-          setValue(response.data.medications);
+          setValue(response.data.medications)
         }
       } catch (error) {
-        console.error('사용자 데이터 불러오기 실패:', error);
+        console.error('사용자 데이터 불러오기 실패:', error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     }
     fetchUserData()
   }, [])
 
   const handleMedicationChange = (index: number, updatedMedication: Medication) => {
-    const updatedMedications = [...value];
-    updatedMedications[index] = updatedMedication;
+    const updatedMedications = [...value]
+    updatedMedications[index] = updatedMedication
     setValue(updatedMedications)
   }
 
@@ -45,21 +45,20 @@ export default function MedicationForm({url}: MedicationFormProps) {
   }
 
   const handleRemoveTag = (tagToRemove: string) => {
-    setMedicationTags(medicationTags.filter(tag => tag !== tagToRemove))
+    setMedicationTags(medicationTags.filter((tag) => tag !== tagToRemove))
   }
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event.preventDefault()
   }
 
   const validMedications = value.filter(
-    (medication) => 
-      medication.type.trim() !== '' && medication.day.trim() !== '' && medication.frequency.trim() !== ''
+    (medication) => medication.type.trim() !== '' && medication.day.trim() !== '' && medication.frequency.trim() !== '',
   )
-  
+
   const apiData = {
     medications_json: JSON.stringify(validMedications),
-    total: validMedications.length.toString()
+    total: validMedications.length.toString(),
   }
 
   return (
@@ -69,7 +68,10 @@ export default function MedicationForm({url}: MedicationFormProps) {
         <br />
         추가해 주세요.
       </Text5xl>
-      <form onSubmit={onSubmit} className="center flex-col w-96 gap-3">
+      <form
+        onSubmit={onSubmit}
+        className="center flex-col w-96 gap-3"
+      >
         {value.map((medication, index) => (
           <MedicationCard
             key={index}
@@ -81,13 +83,13 @@ export default function MedicationForm({url}: MedicationFormProps) {
         {medicationTags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-2">
             {medicationTags.map((tag, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="bg-myLightGreen text-white px-3 py-1 rounded-full text-sm flex items-center"
               >
                 {tag}
-                <button 
-                  onClick={() => handleRemoveTag(tag)} 
+                <button
+                  onClick={() => handleRemoveTag(tag)}
                   className="ml-2 text-white hover:text-red-200"
                 >
                   ×
@@ -102,7 +104,7 @@ export default function MedicationForm({url}: MedicationFormProps) {
           name={'다음 단계로 이동'}
           data={apiData}
           method={'PATCH'}
-          className='w-full'
+          className="w-full"
         />
       </form>
     </div>

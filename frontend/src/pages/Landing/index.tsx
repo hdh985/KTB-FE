@@ -1,9 +1,9 @@
-import Hero from "./Hero";
+import Hero from './Hero'
 
 export default function LandingPage() {
-    return (
-        <section className="wrap">
-            <Hero/>
-        </section>
-    )
+  return (
+    <section className="wrap">
+      <Hero />
+    </section>
+  )
 }

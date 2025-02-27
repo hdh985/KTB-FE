@@ -1,9 +1,9 @@
-import MedicationForm from "./MedicationForm";
+import MedicationForm from './MedicationForm'
 
 export default function InputMedicinePage() {
-    return (
-        <section className="wrap">
-            <MedicationForm url={"api/medications"}/>
-        </section>
-    )
+  return (
+    <section className="wrap">
+      <MedicationForm url={'api/medications'} />
+    </section>
+  )
 }
