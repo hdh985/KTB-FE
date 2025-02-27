@@ -1,0 +1,24 @@
+steps:
+  # 1️⃣ Docker 이미지 빌드
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build', '-t', 'asia-northeast3-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/ktb-fe', '.'
+    ]
+
+  # 2️⃣ Docker 이미지 Artifact Registry에 푸시
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push', 'asia-northeast3-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/ktb-fe'
+    ]
+
+  # 3️⃣ Cloud Run 배포
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args: [
+      'run', 'deploy', 'ktb-fe',
+      '--image', 'asia-northeast3-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/ktb-fe',
+      '--region', 'asia-northeast3',
+      '--allow-unauthenticated'
+    ]
+
+images:
+  - 'asia-northeast3-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/ktb-fe'
