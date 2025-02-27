@@ -4,7 +4,13 @@ export default {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        myBaseBrown: '#F4F3F0',
+        myLightGreen: '#98C24E',
+        myHoverLightGreen: '#B4D37E'
+      }
+    },
   },
   plugins: [require('daisyui')],
 }

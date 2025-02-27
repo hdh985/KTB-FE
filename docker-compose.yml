@@ -1,0 +1,6 @@
+services:
+  frontend:
+    build:
+      context: ./frontend   # frontend 폴더 내 Dockerfile 사용
+    ports:
+      - "3000:80"  # 호스트 3000번 포트를 컨테이너 80번 포트로 매핑
