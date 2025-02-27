@@ -1,21 +1,12 @@
-# Node.js LTS 버전 사용
-FROM node:20
-
-# 작업 디렉토리 설정
+# 예시: Nginx를 이용해 빌드된 React 앱을 서빙하는 Dockerfile
+FROM node:14 as build
 WORKDIR /app
-
-# 패키지 설치
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
-
-# 코드 복사 및 빌드
+COPY package*.json ./
+RUN npm install
 COPY . .
-RUN yarn build
+RUN npm run build
 
-# Nginx를 사용하여 정적 파일 제공
-FROM nginx:alpine
-COPY --from=0 /app/dist /usr/share/nginx/html
-
-# Nginx 포트 설정
+FROM nginx:stable-alpine
+COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
