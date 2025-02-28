@@ -42,12 +42,13 @@ export const RedirectButton = ({
 }
 
 type HttpMethod = 'POST' | 'PATCH' | 'PUT' | 'DELETE'
+type APIData = Record<string, any>
 
 type APIButtonProps = ReactButtonProps & {
   url: string
   path: string
   name: string
-  data: Record<string, string>
+  data: APIData
   method: HttpMethod
   disabled?: boolean
 }
